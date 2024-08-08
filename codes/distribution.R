@@ -4,6 +4,7 @@ library(sf)
 library(readxl)
 library(ggsflabel)
 
+
 #-------------- 1. les données de presence-only
 
 # contours de la métropole 
@@ -111,5 +112,10 @@ ggplot() +
   geom_sf(data = pieges_loutres, size = 2, color = "brown") +
   geom_sf_label_repel(data = pieges_loutres, aes(label = num_piege),
                       force = 100, nudge_x = -2, seed = 10)
+
+
+
+
+
 
 
