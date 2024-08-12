@@ -18,7 +18,41 @@ dat %>%
   count(`Espèce / Activité`, sort = TRUE) %>%
   filter(n >= 20) %>%
   print(n = Inf)
-  
+
+# filtre les données pour éviter les redondances
+# dat_sans_repet <- NULL
+# ind <- 1
+# 
+# for (i in 1:nrow(dat)){
+#   
+#   if ((ind == nrow(dat)) || (ind == (nrow(dat) + 1))){
+#     dat_sans_repet <- rbind(dat_sans_repet, dat[ind,])
+#     break
+#   }
+#   
+#   sp_courant <- dat$`Espèce / Activité`[ind]
+#   sp_suivant <- dat$`Espèce / Activité`[ind+1]
+#   tps_courant <- as.numeric(dat$Heure[ind])
+#   tps_suivant <- as.numeric(dat$Heure[ind+1])
+#   
+#   if (sp_courant != sp_suivant){
+#     dat_sans_repet <- rbind(dat_sans_repet, dat[ind,])
+#     ind <- ind + 1
+#   }
+#   
+#   if ((sp_courant == sp_suivant) & (tps_courant - tps_suivant) < 0.1){
+#     dat_sans_repet <- rbind(dat_sans_repet, dat[ind+1,])
+#     ind <- ind + 2
+#   }
+#   
+#   if ((sp_courant == sp_suivant) & (tps_courant - tps_suivant) > 0.1){
+#     dat_sans_repet <- rbind(dat_sans_repet, dat[ind,])
+#     ind <- ind + 1
+#   }
+# }
+# openxlsx::write.xlsx(dat_sans_repet,
+#                      file="data/camtrap_sans_rep.xlsx")
+
 #---- 1. overlap loutres / humains
 
 # lecture et formatage des données
