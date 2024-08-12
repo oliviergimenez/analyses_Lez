@@ -50,7 +50,14 @@ signes_sf <- signes_sf %>%
 ggplot() + 
   geom_sf(data = metropole, fill = "white", lwd = 0.2) + 
   geom_sf(data = bvlez, col = "blue", lwd = 1) +
-  geom_sf(data = signes_sf, size = 3.5, color = "brown", shape = 16)
+  ggimage::geom_image(data = signes_sf, 
+                      aes(x = st_coordinates(signes_sf)[,1], 
+                          y = st_coordinates(signes_sf)[,2],
+                          image = "img/poop-emoji.png")) +
+  xlab("") + 
+  ylab("")
+# geom_sf(data = signes_sf, size = 5, color = "brown", shape = 16)
+
 
 ggsave("outputs/spraints.png", dpi = 600, width = 15, height = 15)
 
@@ -61,8 +68,14 @@ pos_pieges <- st_read("shp/piege_photos_cefe.shp")
 
 ggplot() + 
   geom_sf(data = metropole, fill = "white", lwd = 0.2) + 
-  geom_sf(data = bvlez[bvlez$NomEntiteH == "Le Lez",], lwd = 1, col = "blue") +
-  geom_sf(data = pos_pieges, size = 3, color = "black", shape = 16) #+
+  geom_sf(data = bvlez, lwd = 1, col = "blue") +
+  ggimage::geom_image(data = pos_pieges, 
+                      aes(x = st_coordinates(pos_pieges)[,1], 
+                          y = st_coordinates(pos_pieges)[,2],
+                          image = "img/camera-emoji.png")) +
+  xlab("") + 
+  ylab("")
+#  geom_sf(data = pos_pieges, size = 5, color = "black", shape = 16) #+
 
 ggsave("outputs/camptraps.png", dpi = 600, width = 15, height = 15)
 
@@ -76,6 +89,24 @@ ggsave("outputs/camptraps.png", dpi = 600, width = 15, height = 15)
 
 #-------------- 3. les points de pompage ADNe
 
+adne <- read_csv("data/ADNe/résultats_campagne_adne_lez_novembre_d_cembre_2023.csv")
 
+adne_sf <- st_as_sf(as_tibble(adne[,c("Longitude", "Latitude")]), 
+                      coords = c("Longitude", "Latitude"), 
+                      crs = 4326) %>%
+  st_transform(st_crs(bvlez))
+
+
+ggplot() + 
+  geom_sf(data = metropole, fill = "white", lwd = 0.2) + 
+  geom_sf(data = bvlez, col = "blue", lwd = 1) +
+  ggimage::geom_image(data = adne_sf, 
+                    aes(x = st_coordinates(adne_sf)[,1], 
+                        y = st_coordinates(adne_sf)[,2],
+                        image = "img/dna-emoji.png")) +
+  xlab("") + 
+  ylab("")
+#  geom_sf(data = adne_sf, size = 5, color = "green", shape = 16)
+ggsave("outputs/adne.png", dpi = 600, width = 15, height = 15)
 
 #-------------- 4. les points de prélèvements ADN pour structuration génétique/régime alimentaire

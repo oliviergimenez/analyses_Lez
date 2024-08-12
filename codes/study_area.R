@@ -55,10 +55,10 @@ studyarea <- ggplot() +
   geom_sf(data = metropole, fill = "white", lwd = 0.2) + 
   geom_sf(data = bvlez, 
           aes(color = NomEntiteH), lwd = 3, key_glyph = draw_key_timeseries) +
-  scale_color_manual(name = NULL,
-                     breaks = c("Le Lez", "La Mosson", "La Lironde", "Le Lirou", "Le Verdanson"),
-                     values = rev(c("#6BAED6", "#4292C6", "#2171B5", "#08519C", "#08306B")),
-                     guide = guide_legend(override.aes = list(linetype = rep(1, 5)))) +
+  #scale_color_manual(name = NULL,
+  #                   breaks = c("Le Lez", "La Mosson", "La Lironde", "Le Lirou", "Le Verdanson"),
+  #                   values = rev(c("#6BAED6", "#4292C6", "#2171B5", "#08519C", "#08306B")),
+  #                   guide = guide_legend(override.aes = list(linetype = rep(1, 5)))) +
   theme(legend.position = "bottom",
         legend.background = element_rect(fill = "white", color = "grey75"),
         legend.text = element_text(size = 20, face = "bold"),
@@ -92,7 +92,8 @@ plot_fr <- fr_df %>%
            xmax = st_bbox(metropole)[3], 
            xmin = st_bbox(metropole)[1], 
            colour = "red", 
-           fill = NA) +
+           fill = "red",
+           lwd = 0.5) +
   theme_bw() +
   theme(legend.position = "none",
         panel.grid = element_blank(),
