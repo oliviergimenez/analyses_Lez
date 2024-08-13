@@ -64,7 +64,8 @@ ggsave("outputs/spraints.png", dpi = 600, width = 15, height = 15)
 
 #-------------- 2. les données de pièges photos
 
-pos_pieges <- st_read("shp/piege_photos_cefe.shp")
+pos_pieges <- st_read("shp/piege_photos_loutre_cefe.shp")
+length(pos_pieges$Numero)
 
 ggplot() + 
   geom_sf(data = metropole, fill = "white", lwd = 0.2) + 

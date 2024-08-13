@@ -84,21 +84,43 @@ sites_sf$nb_indices <- nb_indices
 ggplot() + 
   geom_sf(data = metropole, fill = "white", lwd = 0.2) + 
   geom_sf(data = bvlez, col = "blue", lwd = 1) +
-  geom_sf(data = sites_sf, col = "orange", size = 7) + 
+  geom_sf(data = sites_sf, col = "orange", size = 25) + 
   geom_text(data = sites_sf, 
             aes(x = st_coordinates(sites_sf)[,1], 
                                  y = st_coordinates(sites_sf)[,2],
                                  label = nb_indices), 
-            colour = "white") +
+            colour = "white",
+            size = 15) +
   xlab("") + 
   ylab("")
 
+ggplot() + 
+  geom_sf(data = metropole, fill = "white", lwd = 0.2) + 
+  geom_sf(data = bvlez, col = "blue", lwd = 1) +
+  geom_sf(data = sites_sf, col = "orange", size = 7) +
+  geom_sf_label_repel(data = sites_sf, 
+                      aes(label = nb_indices),
+                      force = .5, 
+                      nudge_x = -.25,
+                      box.padding = 0.5,
+                      seed = 10,
+                      hjust = .5,
+                      segment.curvature = -0.1,
+                      segment.ncp = 3,
+                      segment.angle = 20,
+                      max.overlaps = Inf,
+                      size = 15) +
+  xlab("") + 
+  ylab("")
 ggsave("outputs/data_spraints.png", dpi = 600, width = 15, height = 15)
 
 
 #-------------- 2. les données de pièges photos
 
-pos_pieges <- st_read("shp/piege_photos_cefe.shp")
+#pos_pieges <- st_read("shp/piege_photos_cefe.shp")
+pos_pieges <- st_read("shp/piege_photos_loutre_cefe.shp")
+pos_pieges <- pos_pieges %>%
+  rename(num_piege = Numero)
 
 videos <- readxl::read_xlsx("data/pieges_photo_classes.xlsx") %>%
   filter(`Espèce / Activité` == "Loutre") %>%
@@ -109,19 +131,27 @@ videos <- readxl::read_xlsx("data/pieges_photo_classes.xlsx") %>%
 pos_pieges <- pos_pieges %>% 
   left_join(videos) %>%
   mutate(nb_camtramps = n) %>%
-  mutate(nb_camtramps = if_else(!is.na(nb_camtramps), nb_camtramps, 0))
+  mutate(nb_camtramps = if_else(!is.na(nb_camtramps), nb_camtramps, 0)) %>%
+  mutate(nb_camtramps = as.character(nb_camtramps))
 
-sum(pos_pieges$nb_camtramps)
+pos_pieges$nb_camtramps # 25 videos de loutres
 
 ggplot() + 
   geom_sf(data = metropole, fill = "white", lwd = 0.2) + 
   geom_sf(data = bvlez, col = "blue", lwd = 1) +
-  geom_sf(data = pos_pieges, col = "orange", size = 7) + 
+  geom_sf(data = pos_pieges, col = "orange", size = 5) + 
   geom_sf_label_repel(data = pos_pieges, 
                       aes(label = nb_camtramps),
-                      force = 100, 
-                      nudge_x = -2, 
-                      seed = 10) +
+                      force = .5, 
+                      nudge_x = -.25,
+                      box.padding = 0.5,
+                      seed = 10,
+                      hjust = .5,
+                      segment.curvature = -0.1,
+                      segment.ncp = 3,
+                      segment.angle = 20,
+                      max.overlaps = Inf,
+                      size = 15) +
   xlab("") + 
   ylab("")
 
@@ -155,13 +185,27 @@ ggplot() +
   geom_sf(data = metropole, fill = "white", lwd = 0.2) + 
   geom_sf(data = bvlez, col = "blue", lwd = 1) +
   geom_sf(data = adne_sf, col = "orange", size = 7) + 
-  geom_text(data = adne_sf, 
-            aes(x = st_coordinates(adne_sf)[,1], 
-                y = st_coordinates(adne_sf)[,2],
-                label = nb_adne), 
-            colour = "white") +
+#  geom_text(data = adne_sf, 
+#            aes(x = st_coordinates(adne_sf)[,1], 
+#                y = st_coordinates(adne_sf)[,2],
+#                label = nb_adne), 
+#            colour = "white",
+#            size = 15) +
+  geom_sf_label_repel(data = adne_sf, 
+                      aes(label = nb_adne),
+                      force = 1, 
+                      box.padding = 0.5,
+                      seed = 10,
+                      hjust = .5,
+                      nudge_x = 20,
+                      nudge_y = 20,
+                      min.segment.length = 0, # draw all line segments
+                      segment.curvature = -0.1,
+                      segment.ncp = 3,
+                      segment.angle = 20,
+                      max.overlaps = Inf,
+                      size = 15) +
   xlab("") + 
   ylab("")
-
 ggsave("outputs/data_adne.png", dpi = 600, width = 15, height = 15)
 
