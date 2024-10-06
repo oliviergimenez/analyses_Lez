@@ -5,7 +5,7 @@ Le papier est disponible à xx en libre accès.
 
 Ici nous fournissons le code et les données pour reproduire les analyses et les figures du papier : 
 
-* `codes/`: les codes
-* `data/`: les données
-* `img/`: les images
-* `redaction/`: le papier (document partagé Google Doc)
+* [`codes/`](https://github.com/oliviergimenez/analyses_Lez/tree/main/codes): les codes
+* [`data/`](https://github.com/oliviergimenez/analyses_Lez/tree/main/data): les données
+* [`img/`](https://github.com/oliviergimenez/analyses_Lez/tree/main/img): les images
+* [`redaction/`](https://github.com/oliviergimenez/analyses_Lez/tree/main/redaction): le papier (document partagé Google Doc)
