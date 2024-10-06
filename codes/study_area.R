@@ -14,16 +14,19 @@ metropole <- st_read("shp/MMM_MMM_Limites.shp")
 coursdeau <- st_read("shp/CoursEau_FXX.shp")
 
 coursdeau_metro <- coursdeau %>% st_intersection(metropole)
-
+mask <- coursdeau_metro$CdEntiteHy == "Y3211060"
+coursdeau_metro$NomEntiteH[mask] <- "La Lironde du Méjean"
 lez <- coursdeau_metro[coursdeau_metro$NomEntiteH == "Le lez",]
 lez$NomEntiteH <- fct_recode(lez$NomEntiteH, 'Le Lez' = 'Le lez')
 mosson <- coursdeau_metro[coursdeau_metro$NomEntiteH == "La Mosson",]
 lironde <- coursdeau_metro[coursdeau_metro$NomEntiteH == "La Lironde",]
+lironde_mejean <- coursdeau_metro[coursdeau_metro$NomEntiteH == "La Lironde du Méjean",]
 lirou <- coursdeau_metro[coursdeau_metro$NomEntiteH == "Le Lirou",]
 verdanson <- coursdeau_metro[coursdeau_metro$NomEntiteH == "Le Verdanson",]
 bvlez <- rbind(lez,
                mosson,
                lironde,
+               lironde_mejean,
                lirou,
                verdanson)
 
@@ -79,7 +82,7 @@ studyarea <- ggplot() +
                       size = 7, 
                       fontface = "bold",
                       alpha = 0.8) +
-  labs(x = NULL, y = NULL)
+  labs(x = NULL, y = NULL, color = NULL)
 studyarea
 
 fr_df <- st_read("shp/departement.shp")
